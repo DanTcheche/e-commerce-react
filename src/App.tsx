@@ -4,18 +4,17 @@ import { ProductList } from "@/components/ProductList";
 import { getProducts } from "@/api/getProducts";
 import { Product } from "@/components/Product";
 
-function App() {
+const App = () => {
   const { data: products } = useQuery({
     queryKey: ["getProducts"],
     queryFn: getProducts,
   });
-  console.log(products);
   return (
     <ProductList>
       {products &&
         products.map((item, key) => <Product key={key} product={item} />)}
     </ProductList>
   );
-}
+};
 
 export default App;
