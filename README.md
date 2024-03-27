@@ -1,2 +1,3 @@
-# e-commerce-react
-E-commerce example in React.
+# React + TypeScript + Vite
+
+To run the project use `npm run dev`.
