@@ -1,11 +1,9 @@
-import { ProductSchema } from "@/schemas/ProductSchema"
+import { ProductSchema } from "@/schemas/ProductSchema";
 
 interface ProductProps {
-  product: ProductSchema
+  product: ProductSchema;
 }
 
-export const Product = ({product}: ProductProps) => {
-  return (
-    <li>{product.title}</li>
-  )
-}
+export const Product = ({ product }: ProductProps) => {
+  return <li>{product.title}</li>;
+};

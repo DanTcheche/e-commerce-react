@@ -1,13 +1,9 @@
-import { ReactNode } from "react"
+import { ReactNode } from "react";
 
 interface ProductListProps {
-  children: ReactNode
+  children: ReactNode;
 }
 
-export const ProductList = ({children}: ProductListProps): ReactNode=> {
-  return (
-    <ul>
-      {children}
-    </ul>
-  )
-}
+export const ProductList = ({ children }: ProductListProps): ReactNode => {
+  return <ul>{children}</ul>;
+};
