@@ -5,5 +5,5 @@ interface ProductListProps {
 }
 
 export const ProductList = ({ children }: ProductListProps) => {
-  return <ul>{children}</ul>;
+  return <div className="flex flex-wrap">{children}</div>;
 };
