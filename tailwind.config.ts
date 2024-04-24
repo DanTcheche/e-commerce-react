@@ -55,4 +55,4 @@ export default {
     },
   },
   plugins: [typography, forms, tailwindcss, animate],
-} satisfies Config
+} satisfies Config;
