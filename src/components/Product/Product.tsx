@@ -17,14 +17,12 @@ export const Product = ({ product }: ProductProps) => {
         <h2 className="mb-2 text-lg font-medium dark:text-black text-gray-900">
           {product.title}
         </h2>
-        {product.description}
+        <p>{product.description}</p>
         <div className="flex items-center">
           <p className="text-base font-medium text-gray-500 dark:text-black-300">
             {product.price} $
           </p>
-          <p className="ml-auto">
-            <FaRegHeart />
-          </p>
+          <FaRegHeart />
         </div>
       </div>
     </div>
