@@ -1,11 +1,13 @@
 import { ProductSchema } from "@/schemas/ProductSchema";
-import { FaRegHeart } from "react-icons/fa6";
+import { MouseEventHandler } from "react";
+import { FaHeart, FaRegHeart } from "react-icons/fa6";
 
 interface ProductProps {
   product: ProductSchema;
+  handleFavorite: MouseEventHandler<HTMLDivElement>;
 }
 
-export const Product = ({ product }: ProductProps) => {
+export const Product = ({ product, handleFavorite }: ProductProps) => {
   return (
     <div className="mx-auto mt-11 w-80 transform overflow-hidden rounded-lg bg-white shadow-md duration-300 hover:scale-105 hover:shadow-lg">
       <img
@@ -22,7 +24,13 @@ export const Product = ({ product }: ProductProps) => {
           <p className="text-base font-medium text-gray-500 dark:text-black-300">
             {product.price} $
           </p>
-          <FaRegHeart />
+          <div onClick={handleFavorite}>
+            {product.isFavorite ? (
+              <FaHeart color="red" />
+            ) : (
+              <FaRegHeart color="red" />
+            )}
+          </div>
         </div>
       </div>
     </div>
