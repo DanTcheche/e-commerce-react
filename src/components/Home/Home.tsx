@@ -1,10 +1,9 @@
-import "./App.css";
 import { useQuery } from "@tanstack/react-query";
 import { ProductList } from "@/components/ProductList";
 import { getProducts } from "@/api/getProducts";
 import { Product } from "@/components/Product";
 
-const App = () => {
+export const Home = () => {
   const { data: products } = useQuery({
     queryKey: ["getProducts"],
     queryFn: getProducts,
@@ -16,5 +15,3 @@ const App = () => {
     </ProductList>
   );
 };
-
-export default App;
