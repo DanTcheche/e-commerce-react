@@ -4,8 +4,7 @@ import { getProducts } from "@/api/getProducts";
 import { Product } from "@/components/Product";
 import { SearchBar } from "../SearchBar";
 import { useEffect, useState } from "react";
-import useDebounce from "@/hooks/useDebounce";
-import { ProductSchema } from "@/schemas/ProductSchema";
+import { SortBy } from "../SortBy";
 
 export const Home = () => {
   const { data: products } = useQuery({
@@ -13,39 +12,30 @@ export const Home = () => {
     queryFn: getProducts,
   });
 
-  const [loadedProducts, setLoadedProducts] = useState<ProductSchema[]>();
-  const [filteredProducts, setfilteredProducts] = useState<ProductSchema[]>();
   const [filter, setFilter] = useState<string | undefined>();
+  const [favoriteProducts, setFavoriteProducts] = useState<string[]>([]);
 
-  useEffect(() => {
-    if (products && products.length) {
-      setLoadedProducts(products);
-      setfilteredProducts(products);
-    }
-  }, [products]);
+  const filteredProducts = products
+    ? products.filter((product) =>
+        product.title.toLowerCase().includes(filter || "")
+      )
+    : [];
 
-  const handleFilterChange = () => {
-    const filteredProducts = loadedProducts
-      ? loadedProducts.filter((product) =>
-          product.title.toLowerCase().includes(filter || "")
-        )
-      : [];
-    setfilteredProducts(filteredProducts);
-  };
   const handleFavorite = (key: string) => {
-    const updatedProducts = loadedProducts?.map((product) => {
-      if (product.title === key) {
-        return { ...product, isFavorite: !product.isFavorite };
-      }
-      return product;
-    });
-    setLoadedProducts(updatedProducts);
-    handleFilterChange();
+    if (favoriteProducts.includes(key)) {
+      setFavoriteProducts(favoriteProducts.filter((element) => element != key));
+    } else {
+      const updatedFavorites = [...favoriteProducts, key];
+      setFavoriteProducts(updatedFavorites);
+    }
   };
-  useDebounce({ value: filter, handleChange: handleFilterChange });
   return (
     <>
-      <SearchBar onValueChange={(value: string) => setFilter(value)} />
+      <div className="flex">
+        <SearchBar onValueChange={(value: string) => setFilter(value)} />
+        <SortBy />
+      </div>
+
       <ProductList>
         {filteredProducts &&
           filteredProducts.map((item) => (
@@ -53,6 +43,7 @@ export const Home = () => {
               key={item.title}
               product={item}
               handleFavorite={() => handleFavorite(item.title)}
+              isFavorite={favoriteProducts.includes(item.title)}
             />
           ))}
       </ProductList>
