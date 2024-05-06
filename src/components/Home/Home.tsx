@@ -13,6 +13,7 @@ export const Home = () => {
   });
 
   const [filter, setFilter] = useState<string | undefined>();
+  const [sortBy, setSortBy] = useState<string | undefined>();
   const [favoriteProducts, setFavoriteProducts] = useState<string[]>([]);
 
   const filteredProducts = products
@@ -33,7 +34,7 @@ export const Home = () => {
     <>
       <div className="flex">
         <SearchBar onValueChange={(value: string) => setFilter(value)} />
-        <SortBy />
+        <SortBy onValueChange={(value: string) => setFilter(value)} />
       </div>
 
       <ProductList>
