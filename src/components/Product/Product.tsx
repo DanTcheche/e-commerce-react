@@ -5,7 +5,7 @@ import { FaHeart, FaRegHeart } from "react-icons/fa6";
 interface ProductProps {
   product: ProductSchema;
   isFavorite: boolean;
-  handleFavorite: MouseEventHandler<HTMLDivElement>;
+  handleFavorite: MouseEventHandler<HTMLButtonElement>;
 }
 
 export const Product = ({
@@ -29,9 +29,9 @@ export const Product = ({
           <p className="text-base font-medium text-gray-500 dark:text-black-300">
             {product.price} $
           </p>
-          <div onClick={handleFavorite}>
+          <button onClick={handleFavorite}>
             {isFavorite ? <FaHeart color="red" /> : <FaRegHeart color="red" />}
-          </div>
+          </button>
         </div>
       </div>
     </div>

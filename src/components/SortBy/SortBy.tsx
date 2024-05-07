@@ -1,5 +1,5 @@
 import { SortByValues } from "@/enums/sortByValues";
-import { SortByOptions } from "./SortByOptions";
+import { SortByOption } from "./SortByOption";
 import { ChangeEvent } from "react";
 
 interface SortByProps {
@@ -50,7 +50,7 @@ export const SortBy = ({ onValueChange }: SortByProps) => {
         onChange={handleChange}
       >
         {options.map((option) => (
-          <SortByOptions
+          <SortByOption
             key={option.value}
             value={option.value}
             text={option.text}

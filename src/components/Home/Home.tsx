@@ -20,36 +20,30 @@ export const Home = () => {
   const [favoriteProducts, setFavoriteProducts] = useState<string[]>([]);
 
   const handleFilters = (): ProductSchema[] => {
-    if (products) {
-      let sortedFilteredProducts: ProductSchema[] = products;
-      if (sortBy) {
-        if (sortBy == SortByValues.Cheaper) {
-          sortedFilteredProducts = [...products].sort(
-            (a, b) => a.price - b.price
-          );
-        }
-        if (sortBy == SortByValues.MoreExpensive) {
-          sortedFilteredProducts = [...products].sort(
-            (a, b) => b.price - a.price
-          );
-        }
-        if (sortBy == SortByValues.NameAZ) {
-          sortedFilteredProducts = sortAlphabetically(sortedFilteredProducts);
-        }
-        if (sortBy == SortByValues.NameZA) {
-          sortedFilteredProducts = sortAlphabetically(
-            sortedFilteredProducts,
-            "descending"
-          );
-        }
-      }
-
-      sortedFilteredProducts = sortedFilteredProducts.filter((product) => {
-        return product.title.toLowerCase().includes(filter || "");
-      });
-
-      return sortedFilteredProducts;
+    if (!products) return [];
+    let sortedFilteredProducts: ProductSchema[] = products;
+    if (sortBy === SortByValues.Cheaper) {
+      sortedFilteredProducts = [...products].sort((a, b) => a.price - b.price);
     }
+    if (sortBy === SortByValues.MoreExpensive) {
+      sortedFilteredProducts = [...products].sort((a, b) => b.price - a.price);
+    }
+    if (sortBy === SortByValues.NameAZ) {
+      sortedFilteredProducts = sortAlphabetically(sortedFilteredProducts);
+    }
+    if (sortBy === SortByValues.NameZA) {
+      sortedFilteredProducts = sortAlphabetically(
+        sortedFilteredProducts,
+        "descending"
+      );
+    }
+
+    sortedFilteredProducts = sortedFilteredProducts.filter((product) => {
+      return product.title.toLowerCase().includes(filter || "");
+    });
+
+    return sortedFilteredProducts;
+
     return [];
   };
 
@@ -73,15 +67,14 @@ export const Home = () => {
       </div>
 
       <ProductList>
-        {filteredProducts &&
-          filteredProducts.map((item) => (
-            <Product
-              key={item.title}
-              product={item}
-              handleFavorite={() => handleFavorite(item.title)}
-              isFavorite={favoriteProducts.includes(item.title)}
-            />
-          ))}
+        {filteredProducts.map((item) => (
+          <Product
+            key={item.title}
+            product={item}
+            handleFavorite={() => handleFavorite(item.title)}
+            isFavorite={favoriteProducts.includes(item.title)}
+          />
+        ))}
       </ProductList>
     </>
   );
