@@ -4,4 +4,5 @@ export enum SortByValues {
   MoreExpensive = "MORE-EXPENSIVE",
   NameAZ = "NAME-AZ",
   NameZA = "NAME-ZA",
+  Favorites = "FAVORITES",
 }

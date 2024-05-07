@@ -1,6 +1,6 @@
 import { SortByValues } from "@/enums/sortByValues";
-import { SortByOption } from "./SortByOption";
 import { ChangeEvent } from "react";
+import { SortByOption } from "./SortByOption";
 
 interface SortByProps {
   onValueChange: (value: string) => void;
@@ -31,6 +31,10 @@ const options: SortByOption[] = [
   {
     value: SortByValues.NameZA,
     text: "Name (Z-A)",
+  },
+  {
+    value: SortByValues.Favorites,
+    text: "Favorites",
   },
 ];
 

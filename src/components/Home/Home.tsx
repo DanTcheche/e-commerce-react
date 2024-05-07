@@ -37,6 +37,11 @@ export const Home = () => {
         "descending"
       );
     }
+    if (sortBy === SortByValues.Favorites) {
+      sortedFilteredProducts = sortedFilteredProducts.filter((product) => {
+        return favoriteProducts.includes(product.title);
+      });
+    }
 
     sortedFilteredProducts = sortedFilteredProducts.filter((product) => {
       return product.title.toLowerCase().includes(filter || "");
