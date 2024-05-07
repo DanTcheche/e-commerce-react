@@ -3,8 +3,11 @@ import { ProductList } from "@/components/ProductList";
 import { getProducts } from "@/api/getProducts";
 import { Product } from "@/components/Product";
 import { SearchBar } from "../SearchBar";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { SortBy } from "../SortBy";
+import { ProductSchema } from "@/schemas/ProductSchema";
+import { SortByValues } from "@/enums/sortByValues";
+import { sortAlphabetically } from "@/utils/sortAlphabetically";
 
 export const Home = () => {
   const { data: products } = useQuery({
@@ -16,11 +19,41 @@ export const Home = () => {
   const [sortBy, setSortBy] = useState<string | undefined>();
   const [favoriteProducts, setFavoriteProducts] = useState<string[]>([]);
 
-  const filteredProducts = products
-    ? products.filter((product) =>
-        product.title.toLowerCase().includes(filter || "")
-      )
-    : [];
+  const handleFilters = (): ProductSchema[] => {
+    if (products) {
+      let sortedFilteredProducts: ProductSchema[] = products;
+      if (sortBy) {
+        if (sortBy == SortByValues.Cheaper) {
+          sortedFilteredProducts = [...products].sort(
+            (a, b) => a.price - b.price
+          );
+        }
+        if (sortBy == SortByValues.MoreExpensive) {
+          sortedFilteredProducts = [...products].sort(
+            (a, b) => b.price - a.price
+          );
+        }
+        if (sortBy == SortByValues.NameAZ) {
+          sortedFilteredProducts = sortAlphabetically(sortedFilteredProducts);
+        }
+        if (sortBy == SortByValues.NameZA) {
+          sortedFilteredProducts = sortAlphabetically(
+            sortedFilteredProducts,
+            "descending"
+          );
+        }
+      }
+
+      sortedFilteredProducts = sortedFilteredProducts.filter((product) => {
+        return product.title.toLowerCase().includes(filter || "");
+      });
+
+      return sortedFilteredProducts;
+    }
+    return [];
+  };
+
+  const filteredProducts = handleFilters();
 
   const handleFavorite = (key: string) => {
     if (favoriteProducts.includes(key)) {
@@ -33,8 +66,10 @@ export const Home = () => {
   return (
     <>
       <div className="flex">
-        <SearchBar onValueChange={(value: string) => setFilter(value)} />
-        <SortBy onValueChange={(value: string) => setFilter(value)} />
+        <SearchBar
+          onValueChange={(value: string) => setFilter(value.toLowerCase())}
+        />
+        <SortBy onValueChange={(value: string) => setSortBy(value)} />
       </div>
 
       <ProductList>
