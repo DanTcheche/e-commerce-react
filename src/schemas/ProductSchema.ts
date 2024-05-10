@@ -10,4 +10,5 @@ export interface ProductSchema {
   category: string;
   thumbnail: string;
   images: string[];
+  isFavorite?: boolean;
 }
